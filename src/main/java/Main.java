@@ -13,9 +13,6 @@ public class Main {
         LinkGraph linkGraph = new LinkGraph();
         linkGraph.buildGraph(new PageNode(randUrl));
         ArrayList<Edge> edges = linkGraph.getVisitedEdges();
-        for (Edge e : edges) {
-            System.out.println(e.edgeToString());
-        }
         System.out.println("Begin at: " + edges.get(0).getCurrent() + " and find: " + edges.get(edges.size() - 1).getDestination());
     }
 
