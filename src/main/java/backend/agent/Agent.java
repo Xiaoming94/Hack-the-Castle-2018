@@ -1,11 +1,11 @@
 package backend.agent;
 
-import org.eclipse.jetty.io.ssl.ALPNProcessor;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.obj.Message;
 import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.util.DiscordException;
 
@@ -27,9 +27,10 @@ public class Agent {
     private IDiscordClient client;
     private Map<String,Integer> pollResults;
     private List<String> usersNotVoted = new ArrayList<>();
-
-    public Agent(PageNode currentPageNode){
+    private IChannel gameChannel;
+    public Agent(PageNode currentPageNode, IChannel gameChannel){
         this.currentPageNode = currentPageNode;
+        this.gameChannel = gameChannel;
         client = this.createClient(accessToken,false);
     }
 
@@ -89,6 +90,10 @@ public class Agent {
         }
     }
 
+    public boolean createPoll(List<String> pages){
+        return true;
+    }
+
     private String generateMessageResponse(String message, String sender) {
         if (message.charAt(0) == '.'){
             String submessage = message.substring(1);
@@ -112,6 +117,5 @@ public class Agent {
         pollResults.replace(vote,linkVotes);
         usersNotVoted.remove(sender);
     }
-
 
 }
