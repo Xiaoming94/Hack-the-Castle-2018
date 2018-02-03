@@ -9,11 +9,8 @@ public class LinkGraph {
     private Queue<Edge> edgeQueue = new ArrayDeque<>();
     private ArrayList<Edge> visitedEdges = new ArrayList<>();
     private HashSet<PageNode> pageNodes = new HashSet<>();
-    public LinkGraph() {
-    }
 
-    public HashSet<PageNode> getPageNodes() {
-        return pageNodes;
+    public LinkGraph() {
     }
 
     public ArrayList<Edge> getVisitedEdges() {
@@ -21,10 +18,14 @@ public class LinkGraph {
     }
 
     private void addEdges(PageNode node) {
-        for (String pn : node.getNeighbours()) {
+        for (String pn : node.getSomeNeighbours()) {
                 edgeQueue.add(new Edge(pn, node.getPageURL()));
         }
     }
+
+    /*
+        Currently hardcoded limit until we can get bot to accept input
+     */
 
     public boolean buildGraph(PageNode node) {
         while (pageNodes.size() < 10) {

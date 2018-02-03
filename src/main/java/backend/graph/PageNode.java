@@ -17,13 +17,20 @@ public class PageNode {
         return pageURL;
     }
 
-    public List<String> getNeighbours(){
+    public List<String> getSomeNeighbours() {
         if(this.neighbourPage.isEmpty()){
             neighbourPage.addAll(findSomeNeighbours());
         }
         return this.neighbourPage;
     }
 
+    public List<String> getAllNeighbours() {
+        return wiki.getLinksOnPage(true, this.pageURL);
+    }
+
+    /*
+        Hardcoded limit so it doesn't take ages to generate a route, will change if we can get bot to accept input
+     */
     private List<String> findSomeNeighbours() {
         List<String> neighboursFound = wiki.getLinksOnPage(true, this.pageURL);
         List<String> reducedNeighbours = new ArrayList<>();
@@ -33,6 +40,9 @@ public class PageNode {
         return reducedNeighbours;
     }
 
+    /*
+        For filtering out duplicates, only used in debugging for the moment
+     */
     public int hashcode() {
         return pageURL.hashCode() + neighbourPage.hashCode();
     }
