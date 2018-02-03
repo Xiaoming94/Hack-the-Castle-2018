@@ -13,6 +13,10 @@ public class PageNode {
         this.pageURL = pageURL;
     }
 
+    public String getPageURL() {
+        return pageURL;
+    }
+
     public List<String> getNeighbours(){
         if(this.neighbourPage.isEmpty()){
             neighbourPage.addAll(findNeighbours());
