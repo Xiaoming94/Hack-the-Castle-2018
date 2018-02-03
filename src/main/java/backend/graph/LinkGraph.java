@@ -2,54 +2,45 @@ package backend.graph;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Queue;
 
 public class LinkGraph {
     private Queue<Edge> edgeQueue = new ArrayDeque<>();
     private ArrayList<Edge> visitedEdges = new ArrayList<>();
-    private ArrayList<PageNode> pageNodes = new ArrayList<>();
-    private String finalDestination;
+    private HashSet<PageNode> pageNodes = new HashSet<>();
+    public LinkGraph() {
+    }
 
-    public Queue<Edge> getEdgeQueue() {
-        return edgeQueue;
+    public HashSet<PageNode> getPageNodes() {
+        return pageNodes;
     }
 
     public ArrayList<Edge> getVisitedEdges() {
         return visitedEdges;
     }
 
-    public ArrayList<PageNode> getPageNodes() {
-        return pageNodes;
+    private void addEdges(PageNode node) {
+        for (String pn : node.getNeighbours()) {
+                edgeQueue.add(new Edge(pn, node.getPageURL()));
+        }
     }
 
-    LinkGraph(String dest) {
-        finalDestination = dest;
-    }
-
-    public void moveEdge(Edge e) {
-        visitedEdges.add(e);
-        edgeQueue.remove(e);
-    }
-
-    public boolean isDest(PageNode node) {
-        for (String str : node.getNeighbours()) {
-            if (str == finalDestination) {
+    public boolean buildGraph(PageNode node) {
+        while (pageNodes.size() < 10) {
+            if (edgeQueue.isEmpty() && !visitedEdges.isEmpty()) {
                 return true;
+            } else {
+                addEdges(node);
+                Edge nextEdge = edgeQueue.poll();
+                visitedEdges.add(nextEdge);
+                pageNodes.add(node);
+                System.out.println(nextEdge.edgeToString());
+                return buildGraph(new PageNode(nextEdge.getDestination()));
             }
         }
-        return false;
+        return true;
     }
-
-    public void addEdges(PageNode node) {
-        for (String str : node.getNeighbours()) {
-            edgeQueue.add(new Edge(node.getPageURL(), str));
-        }
-    }
-
-    public void addNode(Edge e) {
-        pageNodes.add(new PageNode(e.getDestination()));
-    }
-
 
 
 }

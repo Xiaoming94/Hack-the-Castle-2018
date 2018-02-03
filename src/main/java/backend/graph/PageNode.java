@@ -5,7 +5,7 @@ import java.util.List;
 import fastily.jwiki.core.Wiki;
 
 public class PageNode {
-    private Wiki wiki = new Wiki("en.wikipedia.org");
+    private Wiki wiki = new Wiki("sv.wikipedia.org");
     private final String pageURL;
     private final List<String> neighbourPage = new ArrayList();
 
@@ -19,14 +19,22 @@ public class PageNode {
 
     public List<String> getNeighbours(){
         if(this.neighbourPage.isEmpty()){
-            neighbourPage.addAll(findNeighbours());
+            neighbourPage.addAll(findSomeNeighbours());
         }
         return this.neighbourPage;
     }
 
-    private List<String> findNeighbours() {
-        List<String> neighboursFound = wiki.getLinksOnPage(this.pageURL);
-        return neighboursFound;
+    private List<String> findSomeNeighbours() {
+        List<String> neighboursFound = wiki.getLinksOnPage(true, this.pageURL);
+        List<String> reducedNeighbours = new ArrayList<>();
+            for (int i = 0; i < (Math.random() * 2); i++) {
+                reducedNeighbours.add(neighboursFound.get((int) (Math.random() * neighboursFound.size())));
+        }
+        return reducedNeighbours;
+    }
+
+    public int hashcode() {
+        return pageURL.hashCode() + neighbourPage.hashCode();
     }
 
 }

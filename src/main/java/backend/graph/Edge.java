@@ -9,12 +9,20 @@ public class Edge {
         current = curr;
     }
 
+    public String edgeToString() {
+        return this.current + "||" + this.destination;
+    }
+
     public String getDestination() {
         return destination;
     }
 
-    public String getOrigin() {
+    public String getCurrent() {
         return current;
+    }
+
+    public int hashCode(){
+        return destination.hashCode() + current.hashCode();
     }
 
 }
