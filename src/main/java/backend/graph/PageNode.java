@@ -2,6 +2,8 @@ package backend.graph;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 import fastily.jwiki.core.Wiki;
 
 public class PageNode {
@@ -30,12 +32,14 @@ public class PageNode {
 
     /*
         Hardcoded limit so it doesn't take ages to generate a route, will change if we can get bot to accept input
+
+        May or may not be a bit unstable
      */
     private List<String> findSomeNeighbours() {
-        List<String> neighboursFound = wiki.getLinksOnPage(true, this.pageURL);
+        List<String> neighboursFound = getAllNeighbours();
         List<String> reducedNeighbours = new ArrayList<>();
-            for (int i = 0; i < (Math.random() * 2); i++) {
-                reducedNeighbours.add(neighboursFound.get((int) (Math.random() * neighboursFound.size())));
+            for (int i = 0; i < (ThreadLocalRandom.current().nextInt(1, 3 + 1)); i++) {
+                reducedNeighbours.add(neighboursFound.get((ThreadLocalRandom.current().nextInt(0, neighboursFound.size()))));
         }
         return reducedNeighbours;
     }

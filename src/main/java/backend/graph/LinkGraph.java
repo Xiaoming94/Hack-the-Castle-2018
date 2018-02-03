@@ -36,7 +36,7 @@ public class LinkGraph {
                 Edge nextEdge = edgeQueue.poll();
                 visitedEdges.add(nextEdge);
                 pageNodes.add(node);
-                System.out.println(nextEdge.edgeToString());
+                //System.out.println(nextEdge.edgeToString());
                 return buildGraph(new PageNode(nextEdge.getDestination()));
             }
         }

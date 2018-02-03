@@ -10,7 +10,7 @@ public class Edge {
     }
 
     public String edgeToString() {
-        return this.current + "||" + this.destination;
+        return this.current + "-->" + this.destination;
     }
 
     public String getDestination() {
